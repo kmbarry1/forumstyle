@@ -52,7 +52,7 @@ class LetterFraction(FeatureExtractor):
 
 class UppercaseFraction(FeatureExtractor):
   # Count what fraction of all letters uppercase letters are
-  def Extract(self, post): of
+  def Extract(self, post):
     numCaps = 0
     numLetters = 0
     for c in post.fulltext:
