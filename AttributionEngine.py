@@ -1,3 +1,10 @@
+# Current syntax: python AttributionEngine.py CV=<CV> out=<outfile.txt>
+# Holdout cross-validation, 70-30 split: CV=holdout30
+# The validation results will be saved in <outfile.txt>
+# It expects files called SelectedFeatures.txt and SelectedUsers.txt giving the 
+# features and usernames chosen in newline separated format to be in the 
+# current directory.
+
 import os
 import sys
 import codecs
@@ -23,10 +30,6 @@ del users[len(users)-1]
 print("Training on users:")
 for user in users:
   print("  "+user)
-
-f = open("SelectedFeatures.txt",'r')
-featureNames = f.read().split('\n')
-f.close()
 
 # Set up cross-validation, if there is any
 if crossvalidation == 'file':
@@ -66,6 +69,9 @@ elif crossvalidation[0:7] == 'holdout':
         print("Failure! user: " + "  " + user + "  file: " + testFiles[idx][len(testFiles[idx])-1])
 
 # Now I want to construct feature extraction objects
+f = open("SelectedFeatures.txt",'r')
+featureNames = f.read().split('\n')
+f.close()
 features = []
 for fName in featureNames:
   if fName == "numberofwords":
