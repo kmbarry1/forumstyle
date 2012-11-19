@@ -25,7 +25,7 @@ class Post:
     # Now I want to split the post up into an array of words in a reasonable fashion
     # For the moment, I'm going with a conservative technique...split on spaces,
     # after first inserting them after '.' and '/' characters. This bungles web addresses,
-    # and may miss other things, to. '\n' is replaced with ' '.
+    # and may miss other things, too. '\n' is replaced with ' '.
     # Then all punctuation is removed from the words, and they are lower-cased
     # Right now, any words that were pure punctuation result in empty words, which 
     # are removed.
