@@ -1,0 +1,11 @@
+# lines whose text doesn't match an actual feature name will be ignored
+# but using '#' characters to differentiate intentional commments is good practice :)
+numberofwords
+complexity
+letterfraction
+uppercasefraction
+timeofposting
+numberofcharacters
+whitespacefraction
+charactersperword
+apostrophesperword
