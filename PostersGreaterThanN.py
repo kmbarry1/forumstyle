@@ -5,7 +5,7 @@
 import os
 import sys
 
-users = os.listdir("./Data")
+users = os.listdir("../Data")
 
 toplist = open("SelectedUsers.txt", 'w');
 for user in users:
