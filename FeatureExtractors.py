@@ -114,3 +114,114 @@ class ApostrophesPerWord(FeatureExtractor):
 
   nickname = "apostrophesperword"
   discretization = [ 0, 0.001, 0.005, 0.01, 0.03, 0.05, 0.07, 0.09, 0.1, 0.3 ]
+
+# Katherine's additions:
+# ------------------------------------------------
+class DigitFraction(FeatureExtractor):
+# Count what fraction of full text are digits
+   def Extract(self, post):
+      numDigits = 0
+      numLetters = 0
+      for c in post.fulltext:
+         if string.digits.find(c) != -1:
+            numDigits += 1
+      if numDigits > 0:
+         return float(numDigits)/float(len(post.fulltext))
+      else:
+         return 0.0
+
+   nickname = "digitfraction"
+   discretization = [0, 0.002, 0.004, 0.006, 0.008, 0.01, 0.04, 0.07, 0.1, 0.5]
+
+
+class PunctuationFraction(FeatureExtractor):
+   def Extract(self, post):
+      pcount = 0
+      for c in post.fulltext:
+         if ((c=='.') or (c==';') or (c=='!') or (c=='?') or (c==',')):
+            pcount += 1
+      if len(post.words) > 0:
+         return float(pcount)/float(len(post.fulltext))
+      else:
+         return 0.0
+
+   nickname = "punctuationfraction"
+   discretization = [0, 0.001, 0.005, 0.01, 0.03, 0.05, 0.07, 0.1, 0.3]
+
+class SpecialCharFraction(FeatureExtractor):
+   def Extract(self, post):
+      scount = 0
+      for c in post.fulltext:
+         if(not(string.ascii_letters or string.digits)):
+            if ((c == '~') or (c == '@') or (c == '$') or (c == '%') or (c == '^') or (c == '&') or (c == '*') or (c == '+') or (c == '<') or (c == '>') or (c == '/') or (c == '_') or (c == '#')):
+               scount += 1
+      if len(post.words)>0:
+         return float(scount)/float(len(post.fulltext))
+      else:
+         return 0.0
+
+   nickname = "specialcharfraction"
+   discretization = [0, 0.001, 0.003, 0.005, 0.007, 0.01, 0.03, 0.05, 0.1]
+
+class EmoticonsFraction(FeatureExtractor):
+   def Extract(self,post):
+      ecount = 0
+      ind = 0
+      length = len(post.fulltext)
+      for c in post.fulltext:
+         ind+=1
+         # emoticons with eyes and mouth only
+         if((c == ':') or (c == ';') or (c == '=')): 
+            if(ind < length):
+               nextChar = post.fulltext[ind]
+               # nose and mouth
+               if(nextChar == '-'):
+                  if((ind+1) < length):
+                      nextnextChar = post.fulltext[ind+1]
+                      if((nextnextChar  == ')') or (nextnextChar == 'D') or (nextnextChar == '(') or (nextnextChar == 'S') or (nextnextChar == 'P') or (nextnextChar == 'o')):
+                         ecount += 1
+               # no nose, only mouth
+               if((nextChar  == ')') or (nextChar == 'D') or (nextChar == '(') or (nextChar == 'S') or (nextChar == 'P') or (nextChar == 'o')):
+                  ecount += 1
+      if len(post.words) > 0:
+         return float(ecount)/float(len(post.fulltext))
+
+   nickname = "emoticonsfraction"
+   discretization = [0, 0.001, 0.005, 0.01, 0.03, 0.05, 0.07, 0.1, 0.3]
+
+class Bigraph(FeatureExtractor):
+   def Extract(self, post):
+      buckets = [[0 for col in range(26)] for row in range(26)]
+      
+      for w in post.words:
+         length = len(w)
+         ind = 0
+         for c in w:
+            if(ind < (length-1)):
+               currentChar = c
+               nextChar = post.fulltext[ind+1]
+               if((string.ascii_letters.find(currentChar) != -1)  and (string.ascii_letters.find(nextChar) != -1)):
+                  valueCurrent = ord(currentChar.lower()) - ord('a')
+                  valueNextChar = ord(nextChar.lower()) - ord('a')
+                  buckets[valueCurrent][valueNextChar] += 1
+            ind += 1
+       #numWords = len(post.words)
+
+      file = open("name.txt", "w")
+      i = 0
+      for arr in buckets:
+        firstletter = string.ascii_lowercase[i]
+        j = 0
+        for val in arr:
+          secondletter = string.ascii_lowercase[j]
+          j += 1
+          file.write(str(val) + "\n")          
+          #file.write(firstletter + secondletter + " " + str(val) + "\n")
+        i += 1
+      file.close()
+     
+   nickname = "bigraph"
+   discretization = [0, 0.001, 0.005, 0.01, 0.03, 0.05, 0.07, 0.1, 0.3]    
+
+
+   

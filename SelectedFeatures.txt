@@ -9,3 +9,9 @@ numberofcharacters
 whitespacefraction
 charactersperword
 apostrophesperword
+digitfraction
+punctuationfraction
+specialcharfraction
+emoticonsfraction
+bigraph
+
