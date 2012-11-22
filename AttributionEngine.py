@@ -11,6 +11,7 @@ import codecs
 import Post
 import FeatureExtractors as FE
 import Algorithms
+import pickle
 
 crossvalidation = 'none'
 outputfile = None
@@ -73,25 +74,33 @@ f = open("SelectedFeatures.txt",'r')
 featureNames = f.read().split('\n')
 f.close()
 features = []
+f = open("Discretizations.pickle", "rb")
+discretizations = pickle.load(f)
+f.close()
 for fName in featureNames:
+  feat = None
   if fName == "numberofwords":
-    features.append(FE.NumberOfWords())
+    feat = FE.NumberOfWords()
   if fName == "complexity":
-    features.append(FE.Complexity())
+    feat = FE.Complexity()
   if fName == "letterfraction":
-    features.append(FE.LetterFraction())
+    feat = FE.LetterFraction()
   if fName == "uppercasefraction":
-    features.append(FE.UppercaseFraction())
+    feat = FE.UppercaseFraction()
   if fName == "timeofposting":
-    features.append(FE.TimeOfPosting())
+    feat = FE.TimeOfPosting()
   if fName == "numberofcharacters":
-    features.append(FE.NumberOfCharacters())
+    feat = FE.NumberOfCharacters()
   if fName == "whitespacefraction":
-    features.append(FE.WhitespaceFraction())
+    feat = FE.WhitespaceFraction()
   if fName == "charactersperword":
-    features.append(FE.CharactersPerWord())
+    feat = FE.CharactersPerWord()
   if fName == "apostrophesperword":
-    features.append(FE.ApostrophesPerWord())
+    feat = FE.ApostrophesPerWord()
+
+  if (feat != None):
+    feat.discretization = discretizations[feat.nickname]
+    features.append(feat)
 
 print("\nUsing features:")
 for feature in features:

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # lines whose text doesn't match an actual feature name will be ignored
 # but using '#' characters to differentiate intentional commments is good practice :)
 numberofwords
@@ -15,3 +16,22 @@ specialcharfraction
 emoticonsfraction
 bigraph
 
+=======
+# lines whose text doesn't match an actual feature name will be ignored
+# but using '#' characters to differentiate intentional commments is good practice :)
+numberofwords
+complexity
+letterfraction
+uppercasefraction
+timeofposting
+numberofcharacters
+whitespacefraction
+charactersperword
+apostrophesperword
+digitfraction
+punctuationfraction
+specialcharfraction
+emoticonsfraction
+bigraph
+
+>>>>>>> ba711221ed3e1419782b5b198e306cb583f2b450

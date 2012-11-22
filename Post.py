@@ -36,6 +36,7 @@ class Post:
     spacedtext = re.sub('/', '/ ', spacedtext)
     spacedtext = re.sub('\\n', ' ', spacedtext)
     spacedtext = re.sub('\\?', ' ', spacedtext)
+    spacedtext = re.sub('\\!', ' ', spacedtext)
     self.words = spacedtext.split(' ')
     nWords = len(self.words)
     i = 0
