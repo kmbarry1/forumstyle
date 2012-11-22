@@ -2,8 +2,12 @@ import Post
 import FeatureExtractors as FE
 import os
 
+# to find user # type in command line import os
+# os.listdir("../Data").index("arnehulstein")
+#user = os.listdir("../Data")[22]
 user = os.listdir("../Data")[52]
 
+#f = open("../Data/"+user+"/15.txt")
 f = open("../Data/"+user+"/1088.txt")
 posttext = f.read()
 f.close()
@@ -40,3 +44,19 @@ print("Characters Per Word: "+str(charPerWord.Extract(post)))
 
 aposPerWord = FE.ApostrophesPerWord()
 print("Apostrophes Per Word: "+str(aposPerWord.Extract(post)))
+
+digitFrac = FE.DigitFraction()
+print("Fraction of Digit Characters: " +str(digitFrac.Extract(post)))
+
+puncFrac = FE.PunctuationFraction()
+print("Fraction of  punctuations Characters: " +str(puncFrac.Extract(post)))
+
+specialCharFrac = FE.SpecialCharFraction()
+print("Fraction of special Characters ($, %, etc...): " +str(specialCharFrac.Extract(post)))
+
+emoticonsFrac = FE.EmoticonsFraction()
+print("Fraction of emoticon Characters: " +str(emoticonsFrac.Extract(post)))
+
+nBigraph = FE.Bigraph()
+print("Bigraph: " +str(nBigraph.Extract(post)))
+
