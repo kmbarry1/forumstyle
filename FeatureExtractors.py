@@ -19,6 +19,7 @@ class Complexity(FeatureExtractor):
   def Extract(self, post):
     wordlist = copy.copy(post.words)
     numWords = len(wordlist)
+    if numWords == 0: return 0.
     numUniqueWords = 0
     while len(wordlist) != 0:
       numUniqueWords += 1
@@ -43,6 +44,7 @@ class LetterFraction(FeatureExtractor):
       if string.ascii_letters.find(c) != -1:
         numLetters += 1
     if numCharacters > 0:
+      #print("*************RETURN VALUE:  " + str(float(numLetters)/float(numCharacters)))
       return float(numLetters)/float(numCharacters)
     else:
       return 0
