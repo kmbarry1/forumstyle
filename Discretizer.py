@@ -18,12 +18,12 @@ import numpy as np
 def ExtractFeature(feature):
   users = os.listdir("../Data/")
   vals = []
-  limit = 50
+  limit = 150
   #deviations = np.array([0]*len(users))
   deviations = []
   j = 0
   for user in users:
-    if j > limit: break
+    #if j > limit: break
     files = os.listdir("../Data/"+user)
     if len(files) < 2:
       j += 1
@@ -60,8 +60,6 @@ def DetermineDiscretization(vals, deviations):
   # intervals should not be much smaller than the average variation in 
   # the quantity for a given user; otherwise we can't reliably classify that 
   # user.
-
-  #nBins = nUsers/3
 
   max = np.max(vals)
   min = np.min(vals)
@@ -107,7 +105,6 @@ def Occupancy(arr, min, max):
   upper = np.searchsorted(arr, max, 'left')
   return upper - lower
 
-# Now for the main script
 features = []
 for fName in allFeatures:
   if fName == "numberofwords":

@@ -1,3 +1,6 @@
+import copy
+import numpy as np
+
 class LearningAlgorithm:
   def Learn(self, features, featureVectors, classes, assignments):
     print("Studying hard!")
@@ -9,7 +12,7 @@ class MultinomialNaiveBayes(LearningAlgorithm):
   def Learn(self, features, featureVectors, classes, assignments):
     print("You're so naive.")
 
-    self._features = features
+    self._features = copy.deepcopy(features)
     n = len(features)
     m = len(featureVectors)
     c = len(classes)
@@ -80,5 +83,4 @@ class MultinomialNaiveBayes(LearningAlgorithm):
         pOfx += self.classProbabilities[ll]*probProd
       predictedProbabilities[l] = pOfy*pOfxGiveny/pOfx
 
-    #print(predictedProbabilities)
     return predictedProbabilities

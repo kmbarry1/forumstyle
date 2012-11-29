@@ -8,10 +8,11 @@
 import os
 import sys
 import codecs
-import Post
-import FeatureExtractors as FE
-import Algorithms
 import pickle
+import FeatureExtractors as FE
+import Helpers
+import Post
+import Algorithms
 
 crossvalidation = 'none'
 outputfile = None
@@ -24,17 +25,16 @@ for arg in sys.argv:
   if components[0] == "out":
     outputfile = components[1]
 
-f = open("SelectedUsers.txt",'r')
-users = f.read().split('\n')
-f.close()
+users = Helpers.LoadUsers("SelectedUsers.txt")
 del users[len(users)-1]
 print("Training on users:")
 for user in users:
   print("  "+user)
 
 # Set up cross-validation, if there is any
-if crossvalidation == 'file':
-  f = open("SelectedTestDocuments.txt",'r')
+if crossvalidation[0:4] == 'file':
+  #f = open("SelectedTestDocuments.txt",'r')
+  f = open(crossvalidation[4:])
   testDocs = f.read().split('\n')
   f.close()
   if testDocs[len(testDocs)-1] == "": del testDocs[len(testDocs)-1]
@@ -45,6 +45,8 @@ if crossvalidation == 'file':
     divided = line.split(':')
     testUsers[i] = divided[0]
     testFiles[i] = divided[1].split(' ')
+    if testFiles[i][len(testFiles[i])-1] == "":
+      del testFiles[i][len(testFiles[i])-1]
     i += 1
 elif crossvalidation[0:7] == 'holdout':
   holdout_percentage = float(crossvalidation[7:])
@@ -63,45 +65,9 @@ elif crossvalidation[0:7] == 'holdout':
     for i in range(0,n,1):
       postidx = random.randrange(0,len(postfiles),1)
       testFiles[idx].append(postfiles.pop(postidx))
-      try:
-        f = open(dir+"/"+testFiles[idx][len(testFiles[idx])-1])
-        f.close()
-      except:
-        print("Failure! user: " + "  " + user + "  file: " + testFiles[idx][len(testFiles[idx])-1])
 
 # Now I want to construct feature extraction objects
-f = open("SelectedFeatures.txt",'r')
-featureNames = f.read().split('\n')
-f.close()
-features = []
-f = open("Discretizations.pickle", "rb")
-discretizations = pickle.load(f)
-f.close()
-for fName in featureNames:
-  feat = None
-  if fName == "numberofwords":
-    feat = FE.NumberOfWords()
-  if fName == "complexity":
-    feat = FE.Complexity()
-  if fName == "letterfraction":
-    feat = FE.LetterFraction()
-  if fName == "uppercasefraction":
-    feat = FE.UppercaseFraction()
-  if fName == "timeofposting":
-    feat = FE.TimeOfPosting()
-  if fName == "numberofcharacters":
-    feat = FE.NumberOfCharacters()
-  if fName == "whitespacefraction":
-    feat = FE.WhitespaceFraction()
-  if fName == "charactersperword":
-    feat = FE.CharactersPerWord()
-  if fName == "apostrophesperword":
-    feat = FE.ApostrophesPerWord()
-
-  if (feat != None):
-    feat.discretization = discretizations[feat.nickname]
-    features.append(feat)
-
+features = Helpers.LoadFeatures("SelectedFeatures.txt", "Discretizations.pickle")
 print("\nUsing features:")
 for feature in features:
   print("  "+feature.nickname)
