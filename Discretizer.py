@@ -14,6 +14,7 @@ import codecs
 import array
 import os
 import numpy as np
+import Helpers
 
 def ExtractFeature(feature):
   users = os.listdir("../Data/")
@@ -105,24 +106,23 @@ def Occupancy(arr, min, max):
   upper = np.searchsorted(arr, max, 'left')
   return upper - lower
 
-features = []
-for fName in allFeatures:
-  if fName == "numberofwords":
-    features.append(FE.NumberOfWords())
-  if fName == "complexity":
-    features.append(FE.Complexity())
-  if fName == "letterfraction":
-    features.append(FE.LetterFraction())
-  if fName == "uppercasefraction":
-    features.append(FE.UppercaseFraction())
-  if fName == "timeofposting":
-    features.append(FE.TimeOfPosting())
-  if fName == "numberofcharacters":
-    features.append(FE.NumberOfCharacters())
-  if fName == "whitespacefraction":
-    features.append(FE.WhitespaceFraction())
-  if fName == "charactersperword":
-    features.append(FE.CharactersPerWord())
-  if fName == "apostrophesperword":
-    features.append(FE.ApostrophesPerWord())
-
+#features = []
+#for fName in allFeatures:
+#  if fName == "numberofwords":
+#    features.append(FE.NumberOfWords())
+#  if fName == "complexity":
+#    features.append(FE.Complexity())
+#  if fName == "letterfraction":
+#    features.append(FE.LetterFraction())
+#  if fName == "uppercasefraction":
+#    features.append(FE.UppercaseFraction())
+#  if fName == "timeofposting":
+#    features.append(FE.TimeOfPosting())
+#  if fName == "numberofcharacters":
+#    features.append(FE.NumberOfCharacters())
+#  if fName == "whitespacefraction":
+#    features.append(FE.WhitespaceFraction())
+#  if fName == "charactersperword":
+#    features.append(FE.CharactersPerWord())
+#  if fName == "apostrophesperword":
+#    features.append(FE.ApostrophesPerWord())

@@ -13,4 +13,4 @@ digitfraction
 punctuationfraction
 specialcharfraction
 emoticonsfraction
-#bigraph
+bigraph_al
