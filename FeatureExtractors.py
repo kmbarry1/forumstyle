@@ -1,5 +1,6 @@
 import string
 import copy
+import numpy as np
 
 class FeatureExtractor:
   def Extract(self, post):
@@ -114,6 +115,356 @@ class ApostrophesPerWord(FeatureExtractor):
 
   nickname = "apostrophesperword"
   discretization = [ 0, 0.001, 0.005, 0.01, 0.03, 0.05, 0.07, 0.09, 0.1, 0.3 ]
+
+class LetterFrequencies(FeatureExtractor):
+  def Extract(self, post, redo):
+    if  redo == False:
+      return self.letterFreqs
+    self.letterFreqs = np.array([0]*26)
+    for w in post.words:
+      for c in w:
+        if string.ascii_lowercase.find(c) != -1:
+          self.letterFreqs[ord(c) - ord('a')] += 1
+    self.letterFreqs = self.letterFreqs / np.sum(self.letterFreqs)
+    return self.letterFreqs
+
+class LetterFrequency_a(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 0
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_a"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_b(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 1
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_b"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_c(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 2
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_c"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_d(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 3
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_d"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_e(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 4
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_e"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_f(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 5
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_f"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_g(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 6
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_g"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_h(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 7
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_h"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_i(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 8
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_i"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_j(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 9
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_j"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_k(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 10
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_k"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_l(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 11
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_l"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_m(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 12
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_m"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_n(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 13
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_n"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_o(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 14
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_o"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_p(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 15
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_p"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_q(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 16
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_q"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_r(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 17
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_r"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_s(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 18
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_s"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_t(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 19
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_t"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_u(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 20
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_u"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_v(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 21
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_v"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_w(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 22
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_w"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_x(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 23
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_x"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_y(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 24
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_y"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
+
+class LetterFrequency_z(FeatureExtractor):
+
+  def __init__(self, lettFreq, redo):
+    self._lettFreq = lettFreq
+    self._redo = redo
+    self._idx = 25
+
+  def Extract(self, post):
+    return self._lettFreq.Extract(post, self._redo)[self._idx]
+
+  nickname = "letterfrequency_z"
+  discretization = [ 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ]
 
 # Katherine's additions:
 # ------------------------------------------------

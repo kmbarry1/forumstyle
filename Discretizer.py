@@ -66,6 +66,7 @@ def DetermineDiscretization(vals, deviations):
   min = np.min(vals)
   #if ((max - min)/nBins < avg_dev):
   nBins = (max - min)/(avg_dev)
+  if (nBins == 0): nBins = 2
   # Now determine the bins
   n = 0
   bins = [0.]

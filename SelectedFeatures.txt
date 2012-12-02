@@ -14,3 +14,8 @@ punctuationfraction
 specialcharfraction
 emoticonsfraction
 bigraph_al
+letterfrequency_a
+letterfrequency_b
+letterfrequency_c
+letterfrequency_d
+letterfrequency_e
