@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-import Algorithms
+import AlgorithmsInfoGain
 import Helpers
 
 userFile = "SelectedUsers.txt"
