@@ -38,7 +38,7 @@ totalNumPosts = np.sum(nDocsPerAuthor)
 
 # P(x = vf)
 probOfRandomAuthor = nDocsPerAuthor / totalNumPosts
-
+print('probOfRandomAuthor: ',probOfRandomAuthor)
 # H(Y|x=vf)
 alg = AlgorithmsInfoGain.MultinomialNaiveBayesInfoGain()
 alg.LearnInfoGain(features,featureVectors,np.arange(n),classAssignments)
@@ -60,15 +60,15 @@ for i in range(0,m,1):
 # sum probabilities over the users
 p_yb = np.zeros((m,len(k)))
 for y in range(0,m,1): # features
-  for b in range(0,k[i]): # discretizations
+  for b in range(0,k[y]): # discretizations
     for u in range(0,n,1): # users
-      p_yb[y][b] += p_yub[y][u][b]*nDocsPerAuthor[u]
+      p_yb[y][b] = p_yb[y][b] +  p_yub[y][u][b]*nDocsPerAuthor[u]
 p_yb = p_yb/totalNumPosts
 
 # sum over discretizations, b,  to get H(Y) = -sum(p_yb*log2(p_yb))
 H_Y = np.zeros(m)
 for y in range(0,m,1): # features
-  for b in range(0,k[i]): # discretizations
+  for b in range(0,k[y]): # discretizations
     lp_yb = np.log2(p_yb[y][b])
     check = np.isinf(lp_yb)
     if(check == 1):
@@ -83,7 +83,7 @@ H_temp = np.zeros((m,n))
 H_yx = np.zeros(m)
 for y in range(0,m,1): # features
   for u in range(0,n,1): # users
-    for b in range(0,k[i]): # discretizations
+    for b in range(0,k[y]): # discretizations
       lp_yub = np.log2(p_yub[y][u][b])
       check2 = np.isinf(lp_yub)
       if(check2 == 1):
@@ -93,3 +93,13 @@ for y in range(0,m,1): # features
 
 IG = np.subtract(H_Y,H_yx)
 
+f = open('topFeatures3','w')
+NUM_MAX = 15
+for i in range(0,NUM_MAX):
+  ind = np.argmax(IG)
+  print(features[ind].nickname,': ',IG[ind])
+  value = (features[ind].nickname,': ',IG[ind])
+  s = str(value)
+  f.write(s)
+  IG = np.delete(IG,ind)
+  features = np.delete(features,ind)
