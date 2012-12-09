@@ -17,16 +17,19 @@ def LoadUsers(filename):
     del users[len(users)-1]
   return users
 
-def LoadFeatures(featureFile, dicretizationFile):
+def LoadFeatures(featureFile, discretizationFile):
   global glbl_bigraph
   global glbl_letterFrequency
   f = open(featureFile, 'r')
   featureNames = f.read().split('\n')
   f.close()
   features = []
-  f = open(dicretizationFile, "rb")
-  discretizations = pickle.load(f)
-  f.close()
+  if discretizationFile != "":
+    f = open(discretizationFile, "rb")
+    discretizations = pickle.load(f)
+    f.close()
+  else:
+    discretizations = None
   for fName in featureNames:
     feat = None
     if fName == "numberofwords":
@@ -1488,7 +1491,7 @@ def LoadData(users, features):
     posts = os.listdir(dir)
     i = 0
     for postfile in posts:
-      #if i >= 100: break
+      if i > 100: break
       vec = []
       f = codecs.open(dir+"/"+postfile,'r',"utf-8")
       posttext = f.read()
@@ -1499,7 +1502,12 @@ def LoadData(users, features):
       i += 1
       for feature in features:
         vec.append(feature.Extract(post))
-      featureVectors.append(vec)
+      featureVectors.append(np.array(vec))
       classAssignments.append(classification)
   featureVectors = np.array(featureVectors)
   return classAssignments, featureVectors
+
+def ScaleData(featureVectors):
+  for i in range(0,featureVectors.shape[1]):
+    featureVectors[:,i] -= np.average(featureVectors[:,i])
+    featureVectors[:,i] /= np.std(featureVectors[:,i])

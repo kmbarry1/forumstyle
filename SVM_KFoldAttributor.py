@@ -67,7 +67,6 @@ for fold in range(0,folds,1):
   #testFVs = np.array(testFVs)
 
   # Do the learnin'
-  selFVsT = np.transpose(selFVs);
   clf.fit(selFVs, selCA)
 
   # Now we validate

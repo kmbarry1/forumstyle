@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-import AlgorithmsInfoGain
+import Algorithms
 import Helpers
 
 userFile = "SelectedUsers.txt"
@@ -18,8 +18,6 @@ for feature in features:
   print("  "+feature.nickname)
 
 classAssignments, featureVectors = Helpers.LoadData(users, features)
-print("# ass: " + str(len(classAssignments)))
-print("# fv: " + str(len(featureVectors)))
 
 uniqueAuthorIndices = [0]
 ca = classAssignments[0]
