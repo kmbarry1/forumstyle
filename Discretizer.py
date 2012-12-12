@@ -17,9 +17,13 @@ import numpy as np
 import Helpers
 
 def ExtractFeature(feature):
+  try:
+    feature._redo = True
+  except AttributeError:
+    None
   users = os.listdir("../Data/")
   vals = []
-  limit = 150
+  limit = 15
   #deviations = np.array([0]*len(users))
   deviations = []
   j = 0
@@ -30,7 +34,6 @@ def ExtractFeature(feature):
       j += 1
       continue
     user_vals = []
-#    print("user: " + user)
     i = 0
     for file in files:
       f = codecs.open("../Data/"+user+"/"+file, 'r', 'utf-8')

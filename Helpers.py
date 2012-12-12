@@ -1491,13 +1491,14 @@ def LoadData(users, features):
     posts = os.listdir(dir)
     i = 0
     for postfile in posts:
-      if i > 100: break
+      #if i > 50: break
       vec = []
       f = codecs.open(dir+"/"+postfile,'r',"utf-8")
       posttext = f.read()
       f.close()
       post = Post.Post(posttext)
       if len(post.words) == 0:
+      #if len(post.words) < 21:
         continue
       i += 1
       for feature in features:
