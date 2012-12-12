@@ -66,11 +66,31 @@ Two algorithms were used. The first was a multinomial Naive Bayes classifier. It
 machine (SVM). Rather than implement our own, we used the SVC support vector machine in the open source \verb+scikit-learn+ \cite{scikit-learn} Python module (which itself uses libsvm \cite{libsvm}). 
 Multi-class classificationn is handled by constructing a binary classifier for each pair of users; the decision process is then treated as a vote in which each classifier ``votes'' for a particular user 
 \cite{libsvm}. Since the various features all had different ranges, we rescaled the extracted values to have mean 0 and standard deviation 1 before running the SVM. A number of different kernels were experimented 
-with: linear, exponential (\(e^{-\gamma <x,x'>^2}\)), and polynomial kernels of various degree. The best performing kernel was found to be a quadratic kernel, specifically \(K(x,x') = (0.5<x,x'>+9)^2\). To give 
-some quantitative sense of this kernel's superiority, its accuracy is roughly six percentage points better than a linear kernel. Using degree three or higher polynomials surprisingly does not yield further 
+with: linear, exponential (\(e^{-\gamma <x,x'>^2}\)), and polynomial kernels of various degree. The best performing kernel was found to be quadratic in the inner product of the feature vectors, specifically 
+\(K(x,x') = (0.5<x,x'>+9)^2\). To give some quantitative sense of this kernel's superiority, its accuracy is roughly six percentage points better than a linear kernel. Using higher-degree polynomials does not yield 
 improvements in accuracy.
 
 \section{Results}
+The performance of these algorithms is summarized in Table \ref{numbers}. Two (non-disjoint) subsets of users were tested: those with more than 500 posts (six individuals) and those with more than 50 posts 
+(forty-six individuals). Ten-fold cross validation was used to assess the accuracies. The selected folds were the same for both algorithms. In all cases random chance is outperformed by a significant amount. 
+Though the accuracy is reduced for the larger set of users, it is actually better compared to random than for fewer users. A major factor limiting performance is very short posts, which contain little stylistic 
+information and are thus difficult to attribute. As an example of this, training and testing on only posts with more than ten words for those users with greater than 500 posts improves the accuracies to 
+44.6 and 57.1 percent, for Naive Bayes and the SVM, respectively. 
+
+\begin{table}
+\begin{center}
+  \begin{tabular}{| c | c | c | c |}
+    \hline
+      & \multicolumn{3}{|c|}{Algorithm Accuracy} \\
+    \hline
+     & Naive Bayes & SVM & Random Chance \\ \hline
+    users with \(>\) 500 posts & 40.5\% & 53.8\% & 16.7\% \\ \hline
+    users with \(>\) 50 posts & 20.4\% & 32.9\% & 2.2\% \\ \hline
+  \end{tabular}
+  \caption{\textbf{\footnotesize{Algorithm performance on the top six and top forty-six most frequent posters, compared to random chance.}}}
+  \label{numbers}
+\end{center}
+\end{table}
 
 \section{Conclusions}
 This project represents proof-of-concept for stylometry in online forums where data is often noisy and less abundant than in other written environments. Certainly improvements can be made. It is difficult to 
