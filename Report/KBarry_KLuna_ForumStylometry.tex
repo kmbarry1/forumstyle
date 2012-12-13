@@ -36,6 +36,12 @@ Autumn Quarter 2012
 \maketitle
 \end{singlespace}
 
+\begin{abstract}
+We apply stylometric techniques to determine the authors of posts in online forums. After selecting a small number (15) of features by information gain, we used the Naive Bayes and Support Vector Machine algorithms to 
+perform multiclass classification. The SVM achieves the best performance, being 53\% accurate on the six most frequent posters in the data set and 33\% accurate on the top 46 (using ten-fold cross validation). 
+Accuracy is limited by short posts and the number and types of features used, but proof-of-concept is achieved.
+\end{abstract}
+
 \section{Introduction}
 One of the world wide web's most integral features is the possibility, in principal, of complete anonymity. Though today's web is not anonymous by default, tools like Tor \cite{Tor}, encryption, and 
 careful browsing habits can render users difficult to trace and hamper the association of multiple online identities with a single behind-the-scenes individual. While this may be a good thing for political dissidents 
@@ -59,14 +65,15 @@ time-of-posting and use of emoticons, were unique to this project. Information g
 probability distribution \(X\), as: \(IG(X) = H(Y) - H(Y|X)\). \(H(Y)\) is the entropy of the probability distribution for a post to be written by each author; \(H(Y|X)\) is the conditional entropy of the author 
 distribution given the distribution of the feature in question. Since all the features were continously-valued, they had to be discretized before information gain could be calculated. This was done via a heuristic 
 algorithm based on the notion that bins should on average have a width proportional to the average standard deviation of that feature among all users, but should also contain roughly equal numbers of examples. We 
-used the top fifteen features as ranked by information gain. Using more features than this number involved diminishing returns, likey linked in part to high frequency of short, ambiguously authored posts. In some 
-cases adding features even worsened performance. Keeping the list short has the added benefit of computational efficiency.
+used the top fifteen features as ranked by information gain. Using more features than this number involved diminishing returns, likey linked in part to the high frequency of short, ambiguously authored posts. In some 
+cases adding features even worsened performance. Keeping the list short has the added benefit of computational efficiency. A very serious implementation would use hundreds of features, but this was unnecessary for a 
+proof-of-principle exercise.
 
-The top features can be seen in Figure \ref{infogain}. Interestingly, the same set of features was found to be best for all users with \(>\) 50 posts and \(>\) 500 posts, though the ordering changed slightly. It is 
-interesting that some useful features are either not available or less useful in other stylometric applications. For example, time-of-posting makes little sense in the context of books or newspaper articles 
-(although it could conceivably be useful in the blogosphere). Others, like the fraction of characters that are punctuation, the average number of apostrophes per word, and the fraction of characters that are upper case, 
-are likely so useful in forums precisely because there is little incentive for individuals to follow the established rules of English orthography beyond making themselves understandable. This is an important aspect of 
-forum stylometry that differs from other applications.
+The top features can be seen in Figure \ref{infogain}. The same set of features was found to be best for all users with \(>\) 50 posts and \(>\) 500 posts, though the ordering changed slightly. It is 
+interesting that some useful features are either not available or less powerful in other stylometric applications. For example, time-of-posting makes little sense in the context of books or newspaper articles 
+(although it could conceivably be applicable in the blogosphere). Others, like the fraction of characters that are punctuation, the average number of apostrophes per word, and the fraction of characters that are upper 
+case, are likely so useful in forums precisely because there is little incentive for individuals to follow the established rules of English orthography beyond making the effort necessary to be understood. This is an 
+important aspect of stylometry in forums that differs from other application regimes.
 
 \begin{figure}[H]
  \centering
@@ -75,11 +82,11 @@ forum stylometry that differs from other applications.
   \label{infogain}
 \end{figure}
 
-Two algorithms were used. The first was a multinomial Naive Bayes classifier. It was implemented in Python and used the same discretizations used to calculate the information gain. The second was a support vector 
-machine (SVM). Rather than implement our own, we used the SVC support vector machine in the open source \verb+scikit-learn+ \cite{scikit-learn} Python module (which itself uses libsvm \cite{libsvm}). 
+Two algorithms were used. The first was a multinomial Naive Bayes classifier with Laplace smoothing. It was implemented in Python and used the same discretizations used to calculate the information gain. The second was 
+a support vector machine (SVM). Rather than implement our own, we used the SVC support vector machine in the open source \verb+scikit-learn+ \cite{scikit-learn} Python module (which itself uses libsvm \cite{libsvm}). 
 Multi-class classification is handled by constructing a binary classifier for each pair of users; the decision process is then treated as an ``election'' in which each classifier ``votes'' for a particular user 
-\cite{libsvm}. Since the various features all had different ranges, we rescaled the extracted values to have mean 0 and standard deviation 1 before running the SVM. A number of different kernels were experimented 
-with: linear, exponential (\(e^{-\gamma <x,x'>^2}\)), and polynomial kernels of various degree. The best performing kernel was found to be quadratic in the inner product of the feature vectors, specifically 
+\cite{libsvm}. Since the various features all had different value ranges, we rescaled the extracted features to have mean 0 and standard deviation 1 before running the SVM. A number of different kernels were 
+experimented with: linear, exponential (\(e^{-\gamma <x,x'>^2}\)), and polynomial kernels of various degree. The best performing kernel was found to be quadratic in the inner product of the feature vectors, specifically 
 \(K(x,x') = (0.5<x,x'>+9)^2\). To give some quantitative sense of this kernel's superiority, its accuracy is roughly six percentage points better than a linear kernel. Using higher-degree polynomials does not yield 
 improvements in accuracy.
 
@@ -114,10 +121,11 @@ classification using three posters and two features. The substantial overlap of 
 \end{figure}
 
 \section{Conclusions}
-This project represents proof-of-concept for stylometry in online forums where data is often noisy and less abundant than in other written environments. Certainly improvements can be made. It is difficult to 
+This project represents proof-of-concept for stylometry in online forums where data is often noisy and less abundant than in other written environments. Improvements could certainly be made. It is difficult to 
 imagine significant progress on attributing extremely short posts (e.g., ``Welcome to the forum!''), but the use of more extensive feature sets may improve accuracy for longer posts. Examples of promising features 
 include ``function word'' frequencies (see \cite{stanford}) and recognition of particular phrases or grammatical constructs preferred by posters (which would require some level of natural language processing to 
-extract). 
+extract). The objective of long-term interest, which was not demonstrated here, remains cross-domain attribution, so that actors in an anonymous context can be linked with known actors in a non-anonymous context by 
+posting style.
 
 \begin{thebibliography}{1}
 \begin{singlespace}
