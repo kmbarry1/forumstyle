@@ -10,7 +10,7 @@
 \usepackage{hyperref}
 \usepackage[all]{hypcap}
 \usepackage{setspace}
-\usepackage{fullpage}
+\usepackage[cm]{fullpage}
 
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
@@ -62,18 +62,42 @@ sanitization was performed, primarily removing quotations to prevent confusing t
 \section{Methods}
 There are essentially two components to stylometry: feature selection and classification algorithm. Most features were selected from previous literature \cite{anonymouth,stanford}, though a few, like 
 time-of-posting and use of emoticons, were unique to this project. Information gain was used to select the most useful features. This quantity is defined, for a feature distributed among posts according to a 
-probability distribution \(X\), as: \(IG(X) = H(Y) - H(Y|X)\). \(H(Y)\) is the entropy of the probability distribution for a post to be written by each author; \(H(Y|X)\) is the conditional entropy of the author 
-distribution given the distribution of the feature in question. Since all the features were continously-valued, they had to be discretized before information gain could be calculated. This was done via a heuristic 
-algorithm based on the notion that bins should on average have a width proportional to the average standard deviation of that feature among all users, but should also contain roughly equal numbers of examples. We 
-used the top fifteen features as ranked by information gain. Using more features than this number involved diminishing returns, likey linked in part to the high frequency of short, ambiguously authored posts. In some 
-cases adding features even worsened performance. Keeping the list short has the added benefit of computational efficiency. A very serious implementation would use hundreds of features, but this was unnecessary for a 
-proof-of-principle exercise.
+probability distribution \(X\), as: \(IG(Y|X) = H(Y) - H(Y|X)\). \(Y\) is the probability distribution for a post to be written by a each author, \(H(Y)\) is the entropy of that probability distribution; \(H(Y|X)\) is 
+the conditional entropy of the author distribution given the distribution of the feature in question. Since all the features were continously-valued, they had to be discretized before information gain could be 
+calculated. This was done via a heuristic algorithm based on the notion that bins should on average have a width proportional to the average standard deviation of that feature among all users, but should also contain 
+roughly equal numbers of examples. We used the top fifteen features as ranked by information gain. Using more features than this number involved diminishing returns, likey linked in part to the high frequency of short, 
+ambiguously authored posts. In some cases adding features even worsened performance. Keeping the list short has the added benefit of computational efficiency. A very serious implementation would use hundreds of 
+features, but this was unnecessary for a proof-of-principle exercise. Brief descriptions of the selected features are found in Table \ref{selfeat}.
 
-The top features can be seen in Figure \ref{infogain}. The same set of features was found to be best for all users with \(>\) 50 posts and \(>\) 500 posts, though the ordering changed slightly. It is 
-interesting that some useful features are either not available or less powerful in other stylometric applications. For example, time-of-posting makes little sense in the context of books or newspaper articles 
-(although it could conceivably be applicable in the blogosphere). Others, like the fraction of characters that are punctuation, the average number of apostrophes per word, and the fraction of characters that are upper 
-case, are likely so useful in forums precisely because there is little incentive for individuals to follow the established rules of English orthography beyond making the effort necessary to be understood. This is an 
-important aspect of stylometry in forums that differs from other application regimes.
+\begin{table}[H]
+\begin{center}
+  \begin{tabular}{| c | c |}
+    \hline
+    \textbf{Feature} & \textbf{Description} \\ \hline
+    Punctuation Fraction & Fraction of characters that are punctuation\\ \hline
+    Time & Time of posting\\ \hline
+    Apostrophes Per Word & (\# of apostrophes)/(\# of words)\\ \hline
+    Uppercase Fraction & Fraction of letters that are uppercase\\ \hline
+    Characters Per Word & (\# of characters)/(\# of words)\\ \hline
+    Letter Fraction & Fraction of characters that are letters\\ \hline
+    Complexity & (\# of unique words)/(\# of words)\\ \hline
+    Number of Characters & Number of characters in the post\\ \hline
+    Number of Words & Number of words in the post\\ \hline
+    Whitespace Fraction & Fraction of characters that are whitespace\\ \hline
+    Digit Fraction & Fraction of characters that are decimal digits\\ \hline
+    Bigraphs lc, co, me, and we & Frequency of these two-character strings\\ \hline
+  \end{tabular}
+  \caption{\textbf{\footnotesize{The features used in the first implementation of the algorithm.}}}
+  \label{selfeat}
+\end{center}
+\end{table}
+
+The top features can be seen in Figure \ref{infogain}. The same set of features was found to be best for all users with \(>\) 50 posts and \(>\) 500 posts, though the ordering changed slightly; for example, 
+time-of-posting is more important when users with fewer posts are included, possibly because the more frequent posters have broader distributions of posting times.  It is interesting that some useful features are 
+either not available or less powerful in other stylometric applications. For example, time-of-posting makes little sense in the context of books or newspaper articles (although it could conceivably be applicable in the 
+blogosphere). Others, like the fraction of characters that are punctuation, the average number of apostrophes per word, and the fraction of characters that are upper case, are likely so useful in forums precisely 
+because there is little incentive for individuals to follow the established rules of English orthography beyond making the effort necessary to be understood. This is an important aspect of stylometry in forums that 
+differs from other application regimes.
 
 \begin{figure}[H]
  \centering
