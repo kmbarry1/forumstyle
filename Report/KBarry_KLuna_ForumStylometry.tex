@@ -62,12 +62,13 @@ sanitization was performed, primarily removing quotations to prevent confusing t
 \section{Methods}
 There are essentially two components to stylometry: feature selection and classification algorithm. Most features were selected from previous literature \cite{anonymouth,stanford}, though a few, like 
 time-of-posting and use of emoticons, were unique to this project. Information gain was used to select the most useful features. This quantity is defined, for a feature distributed among posts according to a 
-probability distribution \(X\), as: \(IG(Y|X) = H(Y) - H(Y|X)\). \(Y\) is the probability distribution for a post to be written by a each author, \(H(Y)\) is the entropy of that probability distribution; \(H(Y|X)\) is 
-the conditional entropy of the author distribution given the distribution of the feature in question. Since all the features were continously-valued, they had to be discretized before information gain could be 
-calculated. This was done via a heuristic algorithm based on the notion that bins should on average have a width proportional to the average standard deviation of that feature among all users, but should also contain 
-roughly equal numbers of examples. We used the top fifteen features as ranked by information gain. Using more features than this number involved diminishing returns, likey linked in part to the high frequency of short, 
-ambiguously authored posts. In some cases adding features even worsened performance. Keeping the list short has the added benefit of computational efficiency. A very serious implementation would use hundreds of 
-features, but this was unnecessary for a proof-of-principle exercise. Brief descriptions of the selected features are found in Table \ref{selfeat}.
+probability distribution \(X\), as: \(IG(Y|X) = H(Y) - H(Y|X)\). \(Y\) is the probability distribution for a post to be written by a each author, \(H(Y)\) is the entropy\footnote{Entropy is defined for a probability 
+distribution \(P\) as \(H(P) = -\sum_i p_i \log{p_i}\).} of that probability distribution; \(H(Y|X)\) is the conditional entropy of the author distribution given the distribution of the feature in question. Since all 
+the features were continously-valued, they had to be discretized before information gain could be calculated. This was done via a heuristic algorithm based on the notion that bins should on average have a width 
+proportional to the average standard deviation of that feature among all users, but should also contain roughly equal numbers of examples. We used the top fifteen features as ranked by information gain. Using more 
+features than this number involved diminishing returns, likey linked in part to the high frequency of short, ambiguously authored posts. In some cases adding features even worsened performance. Keeping the list short 
+has the added benefit of computational efficiency. A very serious implementation would use hundreds of features, but this was unnecessary for a proof-of-principle exercise. Brief descriptions of the selected features 
+are found in Table \ref{selfeat}.
 
 \begin{table}[H]
 \begin{center}
